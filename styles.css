@@ -733,7 +733,7 @@ canvas#matrix {
 .nav-arrow:hover { background: rgba(255,255,255,0.24); }
 
 .left-arrow  { left: -1.5rem; }
-.right-arrow { right: -1.5rem; }
+.right-arrow { right: -0.5rem; }
 
 /* ═══════════════════════════════════════════════
    WIFE OVERLAY — LETTER
