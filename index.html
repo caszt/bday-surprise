@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Baby 🐾</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Sacramento&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HOME BUTTON (appears on stages 2+) -->
+<button id="home-btn" title="Go to start">🏠</button>
+
+<!-- ════════════ STAGE 1: MATRIX ════════════ -->
+<div id="stage-matrix" class="stage active">
+  <canvas id="matrix"></canvas>
+
+  <div class="bday-popup" id="bdayPopup">
+    <div class="c-tr"></div>
+    <div class="c-bl"></div>
+    
+    <span class="bday-line l1"><span>Happy</span></span>
+    <span class="bday-line l2"><span>Birthday</span></span>
+    <div class="bday-divider"></div>
+    <span class="bday-line l3"><span>To My</span></span>
+    <span class="bday-line l4"><span>Baby!</span></span>
+    
+    <div class="bday-hearts">
+      <span>♥</span><span>♥</span><span>♥</span>
+    </div>
+  </div>
+
+  <div class="continue-hint">tap anywhere to continue</div>
+</div>
+
+<!-- ════════════ STAGE 2: WARM + CARD ════════════ -->
+<div id="stage-warm" class="stage">
+
+  <div id="petals-container"></div>
+
+  <!-- Paw prompt -->
+  <div id="paw-prompt">
+    <span class="paw-emoji">🐾</span>
+    <span class="paw-label">Someone left something for you…<br>tap the paw to see!</span>
+  </div>
+
+  <!-- Card -->
+  <div id="card-scene">
+    <div id="card-inner">
+
+      <!-- FRONT OF CARD -->
+      <div class="card-face" id="card-front">
+        <span class="front-paw">🐾</span>
+        <div class="front-text">A little something<br>just for you ♡</div>
+        <div class="tap-hint">tap to open</div>
+      </div>
+
+      <!-- BACK / INSIDE OF CARD -->
+      <div class="card-face" id="card-back">
+        <div class="card-back-top">With all our love…</div>
+
+        <div class="pets-row">
+          <!-- CAT -->
+          <div class="pet-container" id="pet-cat">
+            <div style="position:relative;">
+              <div class="chat-bubble" id="bubble-cat">
+                Meow~ Happy Birthday! 🐱
+              </div>
+            </div>
+            <!--
+              ★★★ CAT IMAGE ★★★
+              To use an image, replace the emoji span below with:
+              <img class="pet-img" src="YOUR_IMAGE_URL" alt="cat" id="cat-img" />
+              
+              To move the image, add inline style:
+              style="--px: 0px; --py: 0px;"
+              --px = horizontal offset (negative = left)
+              --py = vertical offset (negative = up)
+            -->
+            <span class="pet-emoji" id="cat-emoji" style="--px: 0px; --py: -60px;">🐱</span>
+            <span class="pet-name" id="cat-name">Kitty</span>
+          </div>
+
+          <!-- DOG -->
+          <div class="pet-container" id="pet-dog">
+            <div style="position:relative;">
+              <div class="chat-bubble right" id="bubble-dog">
+                Woof! We love you! 🐶
+              </div>
+            </div>
+            <!--
+              ★★★ DOG IMAGE ★★★
+              To use an image, replace the emoji span below with:
+              <img class="pet-img" src="YOUR_IMAGE_URL" alt="dog" id="dog-img" />
+              
+              To move the image, add inline style:
+              style="--px: 0px; --py: 0px;"
+            -->
+            <span class="pet-emoji" id="dog-emoji" style="--px: 0px; --py: -50px;">🐶</span>
+            <span class="pet-name" id="dog-name">Puppy</span>
+          </div>
+        </div>
+
+        <div class="card-back-bottom" id="card-bottom">
+          You make every day brighter ✨
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="taketime-text">Take your time!</div>
+</div>
+
+<!-- ─── SURPRISE BUTTON ─── -->
+<div id="surprise-btn-wrap">
+  <button id="surprise-btn">Ready for your next surprise?</button>
+  
+  <div id="choice-wrap">
+    <button class="choice-btn" id="btn-yes">Yes</button>
+    <button class="choice-btn" id="btn-notyet">Not yet</button>
+  </div>
+</div>
+
+<!-- ════════════ STAGE 3: CHOICE SCREEN ════════════ -->
+<div id="stage-yes" class="stage">
+  <h1>This is for you ♡</h1>
+  <p>Choose who's sending you love today…</p>
+
+  <div class="choice-buttons-row">
+    <button class="big-choice-btn" id="btn-wife">Wife 💌</button>
+    <button class="big-choice-btn" id="btn-friends">Friends 🎉</button>
+  </div>
+</div>
+
+<!-- ════════════ WIFE OVERLAY ════════════ -->
+<div id="wife-overlay" class="overlay">
+  <button class="overlay-close" id="wife-close">✕</button>
+
+  <!-- Panel 1: Letter -->
+  <div class="overlay-panel" id="wife-letter-panel">
+    <div class="letter-paper">
+      <div class="letter-header">For my love 💌</div>
+      <div class="letter-body" id="letter-body"></div>
+      <div class="letter-cursor" id="letter-cursor">|</div>
+    </div>
+    <button class="nav-arrow right-arrow" id="wife-to-video">▶</button>
+  </div>
+
+  <!-- Panel 2: Video -->
+  <div class="overlay-panel" id="wife-video-panel" style="display:none;">
+    <button class="nav-arrow left-arrow" id="wife-to-letter">◀</button>
+    <div class="video-wrapper">
+      <!--
+        ★★★ WIFE VIDEO ★★★
+        Replace YOUR_YOUTUBE_ID with the actual YouTube video ID
+        e.g., for https://youtu.be/dQw4w9WgXcQ, the ID is dQw4w9WgXcQ
+      -->
+      <iframe
+        id="wife-iframe"
+        src=""
+        data-src="https://www.youtube.com/embed/YOUR_YOUTUBE_ID?autoplay=1&rel=0"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FRIENDS OVERLAY ════════════ -->
+<div id="friends-overlay" class="overlay">
+  <button class="overlay-close" id="friends-close">✕</button>
+
+  <div class="friends-header">
+    <span class="friends-title">From the people who love you 🎉</span>
+    <!-- Names update dynamically -->
+    <span class="friend-name-label" id="friend-name-label">Friend Name</span>
+  </div>
+
+  <div class="friends-slider-wrap">
+    <div class="friends-slider" id="friends-slider">
+
+      <!--
+        ★★★ FRIENDS VIDEOS ★★★
+        
+        Each .friend-slide is one person.
+        Change the name="" attribute and the YouTube embed ID.
+        
+        Add more slides by duplicating a .friend-slide block.
+        Remove slides by deleting a .friend-slide block.
+        
+        YouTube ID: from URL https://youtu.be/XXXXXXXXX → use XXXXXXXXX
+      -->
+
+      <div class="friend-slide" data-name="Alex">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/FRIEND1_YOUTUBE_ID?rel=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="friend-slide" data-name="Jamie">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/FRIEND2_YOUTUBE_ID?rel=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="friend-slide" data-name="Sam">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/FRIEND3_YOUTUBE_ID?rel=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Dot indicators -->
+    <div class="slider-dots" id="slider-dots"></div>
+
+    <!-- Arrow navigation -->
+    <button class="nav-arrow left-arrow" id="friends-prev">◀</button>
+    <button class="nav-arrow right-arrow" id="friends-next">▶</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
